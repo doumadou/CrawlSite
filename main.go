@@ -82,13 +82,49 @@ func execAndRefreshCmdResult(w http.ResponseWriter, req *http.Request) {
 	exec_cmd(id, w)
 }
 
-
-func searchHandler(w http.ResponseWriter, req *http.Request) {
+func detailHandler(w http.ResponseWriter, req *http.Request) {
 	pathInfo := strings.Trim(req.URL.Path, "/")
     parts := strings.Split(pathInfo, "/")
-	keyword := parts[len(parts) - 1]
+	infohash := parts[len(parts) - 1]
+	infohash = strings.Replace(infohash, ".html", "", -1)
+	//writeString(w, keyword)
+	fmt.Println(infohash)
+
+	t, _ := template.ParseFiles("./templates/" + _config.Template + "/detail.html")  
+
+	info := crawlTorrentDetail(infohash)
+
+	context := map[string]interface{}{
+		"info": info, 
+	}
+	  
+	t.Execute(w, context)  
+}
+
+func searchHandler(w http.ResponseWriter, req *http.Request) {
+	var index int64
+
+	pathInfo := strings.Trim(req.URL.Path, "/")
+    parts := strings.Split(pathInfo, "/")
+	fileds := len(parts)
+	if fileds < 2 {
+		writeString(w, "请重新输入搜索词")
+		return
+	}
+	keyword := parts[1]
+	if fileds == 3 {
+		index,_ = strconv.ParseInt(parts[2], 10, 0)
+	}
 	//writeString(w, keyword)
 	fmt.Println(keyword)
+	if index <= 0 {
+		index = 1
+	}
+
+	extentTitle := ""
+	if index > 1 {
+		extentTitle = fmt.Sprintf("第%d页", index)
+	}
 
 	//path := r.URL.Path
     //request_type := path[strings.LastIndex(path, "."):]
@@ -101,15 +137,53 @@ func searchHandler(w http.ResponseWriter, req *http.Request) {
     //}
     w.Header().Set("content-type", "text/html")
 
-    fin, err := os.Open("./templates/" + _config.Template + "/list.html")
-    defer fin.Close()
-    if err != nil {
-            //log.Fatal("static resource:", err)
-			fmt.Println("template not exists", err)
-    }
-    fd, _ := ioutil.ReadAll(fin)
-    w.Write(fd)
+    //fin, err := os.Open("./templates/" + _config.Template + "/list.html")
+    //defer fin.Close()
+    //if err != nil {
+    //        //log.Fatal("static resource:", err)
+	//		fmt.Println("template not exists", err)
+    //}
+    //fd, _ := ioutil.ReadAll(fin)
+    //w.Write(fd)
 
+	t, _ := template.ParseFiles("./templates/" + _config.Template + "/list.html")  
+
+	rets, resultStr, maxPage := crawlListPage(keyword, 1)
+
+	pageString := ""
+	if maxPage > 0 {
+		pageString = pageString + "<div>"
+		var i int64
+		for i = 1; i < index; i++ {
+			ts := strconv.Itoa(int(i))
+			pageString = pageString + `<a class="num" href="/search/` + keyword + "/" + ts + `">` + ts + "</a>"
+		}
+		pageString = pageString + "<span>" + strconv.Itoa(int(index)) + "</span>"
+		for i = index + 1; i <= maxPage; i++ {
+			ts := strconv.Itoa(int(i))
+			pageString = pageString + `<a class="num" href="/search/` + keyword + "/" + ts + `">` + ts + "</a>"
+		}
+		if index != maxPage {
+			pageString = pageString + `<a class="next" href="/search-a-2-time.html">下一页</a>`
+			pageString = pageString + `<a class="end" href="/search-a-50-time.html">最后一页</a>`
+		}
+
+		pageString = pageString + "</div>"
+	}
+
+	context := map[string]interface{}{
+		"keyword": keyword, 
+		"result": rets,
+		"resultStr": resultStr,
+		"maxPage": maxPage,
+		"pageString" : template.HTML(pageString),
+		"index": index,
+		"extentTitle": extentTitle,
+	}
+
+	fmt.Println(context)
+	  
+	t.Execute(w, context)  
 }
 
 func crawlDataResult(w http.ResponseWriter, r *http.Request) {
@@ -158,6 +232,7 @@ func main() {
 
 	//http.Handle("/", indexFileHandler) 
 	http.HandleFunc("/search/", searchHandler) 
+	http.HandleFunc("/detail/", detailHandler) 
 	http.Handle("/font", http.FileServer(http.Dir("templates/" + _config.Template))) 
 	http.Handle("/css", http.FileServer(http.Dir("templates/" + _config.Template))) 
 	http.Handle("/img", http.FileServer(http.Dir("templates/" + _config.Template))) 

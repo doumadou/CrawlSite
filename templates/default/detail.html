@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>{{ .info.Title }}-磁力链接-磁力搜索</title>
+<meta name="keywords" content="Viaje,a,las,estrellas,磁力链接,磁力资源,磁力搜索"/>
+<meta name="description" content="{{ .info.Title }}的磁力下载,迅雷下载,手机下载"/>
+<meta name="viewport" content="width=device-width"/>
+<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico"/>
+<link rel="stylesheet" type="text/css" href="/font/fontawesome-4.2.0/css/font-awesome.min.css"/>
+<link rel="stylesheet" type="text/css" href="/css/style.css"/>
+<link rel="stylesheet" type="text/css" href="/css/other.css"/>
+<!--[if lt IE 9]>
+      <script src="//cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+	        <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+			      <![endif]-->
+<script type="text/javascript" src="/js/main.js"></script>
+</head>
+<body>
+<header id="top">
+		<div class="head">
+				<div class="wrap">
+						<div class="logo">
+								<a href="http://www.juhelian.com/" target="_blank" title="磁力岛">
+										<img alt="磁力岛 logo" class="pngfix" src="/img/index.png" width="110" height="40" border="0">
+								</a>
+								<div class="search-s">
+										<form name="soform" onsubmit="return gosubmit(this);" action="/">
+												<div class="search-s-top">
+														<div class="input-main">
+																<input name="key" baidusug="2" placeholder="你想要的资源哇,都能找到" type="text" maxlength="100">
+														</div>
+														<button type="submit" class="search-btn"><i class="fa fa-search fa-x1"></i>搜索</button>
+												</div>
+										</form>
+								</div>
+						</div>
+						<div class="menu">
+								<div class="menu-right">
+										<a href="javascript:;" class="theme-login"><i class="fa fa-rss-square fa-1"></i>订阅我们</a>
+										<a href=""><i class="fa fa-mobile fa-2"></i>手机浏览</a>
+								</div>
+						</div>
+				</div>
+		</div>
+</header>
+<div class="theme-popover"><div class="theme-poptit"><a href="javascript:;" title="关闭" class="close">×</a><h3>订阅 是一种坚持</h3></div><div class="theme-popbod dform"><ol> <script>var nId = "d3fa9e217f2595b157b0e1ff3b9fb3170d3b425d22474fd8",nWidth="auto",sColor="light",sText="填写您的邮件地址，订阅我们的精彩内容：" ;</script><script src="http://list.qq.com/zh_CN/htmledition/js/qf/page/qfcode.js" charset="gb18030"></script></ol></div></div><div class="theme-popover-mask" style="display: none;"></div> <div class="contain-s">
+						<div class="wraper">
+								<div class="i-big">
+										<div class="i">
+												<div class="i-tle">资源名称：{{ .info.Title }}
+												</div>
+												<div class="i-go">
+														<span>文件数量：<b>{{ .info.FileCount }}</b></span>
+														<span>访问热度：<b>{{ .info.FileCount }}</b></span>
+														<span>资源大小：<b>{{ .info.FileSize }}</b></span>
+														<span>收录时间：<b>{{ .info.CreateTime }}</b></span>
+														<span>HASH值：<b>{{ .info.Hashinfo }}</b></span>
+												</div>
+										</div>
+										<div class="i">
+												<div class="i-tle">磁力链接
+												</div>
+												<div class="i-go-m">
+														<span class="magnet"><a href="magnet:?xt=urn:btih:{{ .info.Hashinfo }}">magnet:?xt=urn:btih:{{ .info.Hashinfo }}</a></span>
+												</div>
+												<div class="i-go-b">
+														<span class="m"><a href="magnet:?xt=urn:btih:{{ .info.Hashinfo }}">下载磁力</a></span>
+														<span class="t" style="display:none"><a href="thunder://QUFtYWduZXQ6P3h0PXVybjpidGloOmZjODg0ZDNmNGJiOTk2YjUzYjUxOGI1NjE5NDVkZGJhODM4NDUwMzJaWg==">迅雷下载</a></span>
+														<span class="p"><a href="javascript:;" class="theme-check">手机下载</a></span>
+														<div class="theme-popover-2">
+																<div class="theme-poptit-2">
+																		<a href="javascript:;" title="关闭" class="close">×</a>
+																		<h3>扫描 是一种方式</h3>
+																</div>
+																<div class="theme-popbod-2 dform-2">
+																		<ol>
+																				<li><img src="http://cdn.yunpan.la/qrcode.php?type=cili&txt={$info:info_hash}" height="300px" width="300px"/></li>
+																				<li><h4>手机扫描该二维码 或者 手机浏览可长按二维码识别！</h4></li>
+																		</ol>
+																</div>
+														</div>
+														<div class="theme-popover-mask-2"></div>
+														<div class="clear"></div>
+												</div>
+										</div>
+										<div class="i">
+												<div class="i-tle">相关热词
+												</div>
+												<div class="i-go">
+														<span class="keys">
+																<a alt="Viaje" href="/search-Viaje-1.html">Viaje</a><a alt="a" href="/search-a-1.html">a</a><a alt="las" href="/search-las-1.html">las</a><a alt="estrellas" href="/search-estrellas-1.html">estrellas</a>
+														</span>
+												</div>
+										</div>
+										<div class="i">
+												<div class="i-tle">文件列表
+												</div>
+												<div class="i-go list">
+														{{ range $k, $v := .info.FileList }}
+														<span class="left" title="{{ $v.FilePath }}">{{ $v.FilePath }}</span>
+														<span class="right">{{ $v.FileSize }}</span>
+														{{ end }}
+														<div class="clear"></div>
+												</div>
+										</div>
+								</div>
+						</div>
+						<div class="clear"></div>
+				</div>
+				<footer class="footer">
+						<div class="copy-footer">
+								<p>本站资源均来自互联网和DHT网络，仅供技术研究，本站不负任何法律责任，如有侵权请联系站长</p>
+								<p>Copyright©2015-2020 www.juhelian.com All Rights Reserved</p><p>
+								<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1255958842'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s95.cnzz.com/stat.php%3Fid%3D1255958842%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script>
+								</p>
+						</div>
+				</footer>
+				<script type="text/javascript" src="/js/jquery.min.js"></script>
+				<script type="text/javascript" src="/js/jquery.form.js"></script>
+				<script>
+jQuery(document).ready(function($) {
+				  $('.theme-login').click(function(){
+						      $('.theme-popover-mask').fadeIn(100);
+							      $('.theme-popover').slideDown(200);
+								    })
+				      $('.theme-check').click(function(){
+							      $('.theme-popover-mask-2').fadeIn(100);
+								      $('.theme-popover-2').slideDown(200);
+									    })
+
+					    $('.theme-poptit .close').click(function(){
+								    $('.theme-popover-mask').fadeOut(100);
+									    $('.theme-popover').slideUp(200);
+										  })
+
+						    $('.theme-poptit-2 .close').click(function(){
+									    $('.theme-popover-mask-2').fadeOut(100);
+										    $('.theme-popover-2').slideUp(200);
+											  })
+
+							})
+				</script>
+				</body>
+				</html>
